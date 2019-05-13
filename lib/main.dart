@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:Flutter_ObjectDB_Example/components/custom_app_bar.dart';
+import 'package:Flutter_ObjectDB_Example/pages/add_page.dart';
+import 'package:Flutter_ObjectDB_Example/pages/list_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -34,12 +36,8 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
         body: TabBarView(
           controller: _tabController,
           children: <Widget>[
-            Center(
-              child: Text('Add page'),
-            ),
-            Center(
-              child: Text('List page'),
-            )
+            AddPage(),
+            ListPage()
           ],
         ),
         bottomNavigationBar: CustomAppBar(tabController: _tabController),
