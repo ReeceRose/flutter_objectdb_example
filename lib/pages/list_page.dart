@@ -16,7 +16,34 @@ class ListPage extends StatelessWidget {
           return ListView.builder(
             itemCount: items.length,
             itemBuilder: (BuildContext context, int index) {
-              return Text(items.elementAt(index)['name'].toString());
+              Map<dynamic, dynamic> item = items.elementAt(index);
+              print(item);
+              return Dismissible(
+                key: Key(index.toString()),
+                onDismissed: (direction) {
+                  items.removeAt(index);
+                  DatabaseProvider.db.removeName(item['_id']);
+                },
+                direction: DismissDirection.endToStart,
+                // background: Container(color: Colors.red, child: Icon(Icons.content_paste),),
+                background: Container(
+                  alignment: AlignmentDirectional.centerEnd,
+                  color: Colors.red,
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                child: ListTile(
+                  leading: Icon(Icons.label),
+                  title: Text(
+                    item['name'].toString(),
+                  ),
+                ),
+              );
             },
           );
         }

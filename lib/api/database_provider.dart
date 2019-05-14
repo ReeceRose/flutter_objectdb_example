@@ -23,18 +23,23 @@ class DatabaseProvider {
   }
 
   insertName(String name) async {
-    ObjectDB db = await database;
-    db.insert({'name': name});
+    ObjectDB tempDatabase = await database;
+    tempDatabase.insert({'name': name});
   }
 
   Future<List<Map<dynamic, dynamic>>> getAllNames() async {
-    ObjectDB db = await database;
-    return await db.find({});
+    ObjectDB tempDatabase = await database;
+    return await tempDatabase.find({});
+  }
+
+  removeName(String id) async {
+    ObjectDB tempDatabase = await database;
+    await tempDatabase.remove({ '_id': id });
   }
 
   close() async {
-    ObjectDB db = await database;
-    await db.tidy();
-    await db.close();
+    ObjectDB tempDatabase = await database;
+    await tempDatabase.tidy();
+    await tempDatabase.close();
   }
 }
