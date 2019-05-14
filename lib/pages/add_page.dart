@@ -24,8 +24,13 @@ class AddPage extends StatelessWidget {
             onPressed: () {
               if (_name.isEmpty) return;
               // submit
-              DatabaseProvider.databaseProvider.insertName(_name);
-              print(_name);
+              DatabaseProvider.db.insertName(_name);
+              _name = "";
+              Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Added name to local database'),
+                ),
+              );
             },
             child: Text('Add'),
           )

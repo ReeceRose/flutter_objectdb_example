@@ -1,17 +1,18 @@
 import 'dart:io';
 
 import 'package:objectdb/objectdb.dart';
+import 'package:path_provider/path_provider.dart';
 
 class DatabaseProvider {
   DatabaseProvider._();
 
-  final path = Directory.current.path + 'example.db';
-
-  static final DatabaseProvider databaseProvider = DatabaseProvider._();
+  static final DatabaseProvider db = DatabaseProvider._();
 
   ObjectDB _database;
 
   initializeDatabase() async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String path = [appDocDir.path, 'example.db'].join('/');
     _database = ObjectDB(path);
     _database.open();
     return _database;
@@ -23,7 +24,12 @@ class DatabaseProvider {
 
   insertName(String name) async {
     ObjectDB db = await database;
-    db.insert({ 'name': name });
+    db.insert({'name': name});
+  }
+
+  Future<List<Map<dynamic, dynamic>>> getAllNames() async {
+    ObjectDB db = await database;
+    return await db.find({});
   }
 
   close() async {
@@ -31,7 +37,4 @@ class DatabaseProvider {
     await db.tidy();
     await db.close();
   }
-
-
-
 }
