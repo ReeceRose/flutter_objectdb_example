@@ -17,7 +17,6 @@ class ListPage extends StatelessWidget {
             itemCount: items.length,
             itemBuilder: (BuildContext context, int index) {
               Map<dynamic, dynamic> item = items.elementAt(index);
-              print(item);
               return Dismissible(
                 key: Key(index.toString()),
                 onDismissed: (direction) {
@@ -25,7 +24,6 @@ class ListPage extends StatelessWidget {
                   DatabaseProvider.db.removeName(item['_id']);
                 },
                 direction: DismissDirection.endToStart,
-                // background: Container(color: Colors.red, child: Icon(Icons.content_paste),),
                 background: Container(
                   alignment: AlignmentDirectional.centerEnd,
                   color: Colors.red,
