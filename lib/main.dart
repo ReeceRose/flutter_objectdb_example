@@ -1,3 +1,4 @@
+import 'package:Flutter_ObjectDB_Example/api/database_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:Flutter_ObjectDB_Example/components/custom_app_bar.dart';
@@ -15,8 +16,15 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   TabController _tabController;
 
   @override
+  void dispose() {
+    super.dispose();
+    DatabaseProvider.db.close();
+  }
+
+  @override
   void initState() {
     super.initState();
+    DatabaseProvider.db.initializeDatabase();
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(_handleTabSelection);
   }
